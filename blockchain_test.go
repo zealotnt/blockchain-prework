@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/hex"
 	"testing"
 )
 
@@ -21,7 +22,7 @@ func TestBlock(t *testing.T) {
 }
 
 func TestNewBlock(t *testing.T) {
-	testOldBlock := Block{"test", 0, []byte{}, []byte{}}
+	testOldBlock := createTestBlock()
 	testStr := "testing new block!"
 	b := NewBlock(testOldBlock, testStr)
 	if b.Data != "testing new block!" {
@@ -37,10 +38,33 @@ func TestNewBlock(t *testing.T) {
 	}
 }
 
-func TestAddBlock(t *testing.T) {
+func TestAddInvalidBlock(t *testing.T) {
 	InitBlockchain()
-	err := AddBlock(Block{"asdf", 0, []byte{}, []byte{}})
+
+	testOldBlock := createTestBlock()
+	testStr := "testing new block!"
+	b := NewBlock(testOldBlock, testStr)
+	err := AddBlock(b)
 	if err == nil {
 		t.Error("Adding invalid block should have thrown an error.")
 	}
+}
+
+func TestAddValidBlock(t *testing.T) {
+	InitBlockchain()
+	lastBlock := Blockchain[len(Blockchain)-1]
+	testStr := "testing new block!"
+
+	b := NewBlock(lastBlock, testStr)
+	err := AddBlock(b)
+
+	if err != nil {
+		t.Error("Adding block should have not returned error, but returned", err)
+	}
+}
+
+func createTestBlock() Block {
+	const s = "590c9f8430c7435807df8ba9a476e3f1295d46ef210f6efae2043a4c085a569e"
+	decodedTestHash, _ := hex.DecodeString(s)
+	return Block{"test", 0, []byte{}, decodedTestHash}
 }
