@@ -1,5 +1,7 @@
-# blockchain_prework
+# CoderSchool Blockchain Prework!
 
-This is in progress. There are issues logged. 
+Hey there! Welcome to the Blockchain prework.
 
-The play by play is here: https://coderschool.quip.com/RFGYAcmFXE19. 
+You can view instructions for this here: http://www.coderschool.vn/prework/blockchain.
+
+Thanks!
