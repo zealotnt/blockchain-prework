@@ -12,7 +12,7 @@ import (
 // Blockchain is our global blockchain.
 var Blockchain []Block
 
-// Block is the incomplete declaration we need.
+// Block is our basic data structure!
 type Block struct {
 	Data      string
 	Timestamp int64
@@ -27,11 +27,13 @@ func InitBlockchain() {
 	// Fill me in, noble warrior.
 }
 
+// NewBlock creates a new Blockchain Block.
 func NewBlock(oldBlock Block, data string) Block {
 	fmt.Println("******TODO: IMPLEMENT NewBlock!******")
 	return Block{}
 }
 
+// AddBlock adds a new block to the Blockchain.
 func AddBlock(b Block) error {
 	fmt.Println("******TODO: IMPLEMENT AddBlock!******")
 	spew.Dump(Blockchain)
