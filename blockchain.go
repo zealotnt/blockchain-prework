@@ -3,8 +3,9 @@ package main
 import (
 	"bytes"
 	"crypto/sha256"
-	"fmt"
+	"errors"
 	"strconv"
+	"time"
 
 	"github.com/davecgh/go-spew/spew"
 )
@@ -22,22 +23,27 @@ type Block struct {
 
 // InitBlockchain creates our first Genesis node.
 func InitBlockchain() {
-	fmt.Println("******TODO: IMPLEMENT InitBlockchain!******")
+	genesisBlock := Block{"Genesis Block", time.Now().Unix(), []byte{}, []byte{}}
+	genesisBlock.Hash = genesisBlock.calculateHash()
+	Blockchain = []Block{genesisBlock}
 	spew.Dump(Blockchain)
-	// Fill me in, noble warrior.
 }
 
 // NewBlock creates a new Blockchain Block.
 func NewBlock(oldBlock Block, data string) Block {
-	fmt.Println("******TODO: IMPLEMENT NewBlock!******")
-	return Block{}
+	block := Block{data, time.Now().Unix(), []byte{}, []byte{}}
+	block.PrevHash = oldBlock.Hash
+	block.Hash = block.calculateHash()
+	return block
 }
 
 // AddBlock adds a new block to the Blockchain.
 func AddBlock(b Block) error {
-	fmt.Println("******TODO: IMPLEMENT AddBlock!******")
-	spew.Dump(Blockchain)
-	// Fill me in, brave wizard.
+	if !bytes.Equal(b.PrevHash, Blockchain[len(Blockchain)-1].Hash) {
+		return errors.New("Invalid block to be added")
+	}
+	Blockchain = append(Blockchain, b)
+	spew.Dump("After add block: ", Blockchain)
 	return nil
 }
 
